@@ -1,11 +1,16 @@
+// --- НАСТРОЙКИ ---
 var ALL_LANGUAGES = ['base', 'ru', 'en', 'es']; 
 var DISPLAY_LANGS = ['en', 'es', 'ru', 'de', 'fr', 'it', 'zh']; 
 var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot'; 
 var currentLang = 'en';
 
-// --- УМНЫЙ ЗАГРУЗЧИК СЛОВАРЕЙ ---
+// --- ЗАГРУЗЧИК СЛОВАРЕЙ ---
 (function loadDictionaries() {
     var path = 'languages/';
+    var loc = window.location.pathname;
+    if (loc.indexOf('/stories/') !== -1 || loc.indexOf('/news/') !== -1) {
+        path = '../languages/';
+    }
     ALL_LANGUAGES.forEach(function(lang) {
         var script = document.createElement('script');
         script.src = path + lang + '.js';
@@ -17,28 +22,23 @@ var currentLang = 'en';
 window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
 
-// 1. ПРОВЕРЯЕМ ХВОСТИК В ССЫЛКЕ (?startapp=...)
+// --- ЛОГИКА ПЕРЕХОДА (ДЛЯ go.html) ---
 var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
 
 window.onload = function() {
+    // Если мы открыли файл go.html и у нас есть параметр в ссылке
+    if (window.location.pathname.endsWith('go.html') && startParam) {
+        // Переходим к файлу в папке stories
+        window.location.href = 'stories/' + startParam + '.html';
+        return; 
+    }
+
     renderMenu();
     renderSupportBtn();
     updateUI();
-
-    // Если в ссылке указан конкретный пост, и мы на главной странице
-    if (startParam && window.location.pathname.endsWith('index.html')) {
-        loadStory(startParam);
-    }
 };
 
-// Функция загрузки текста истории
-function loadStory(name) {
-    var storyPath = 'stories/' + name + '.html';
-    // Просто перекидываем браузер на нужный файл
-    window.location.href = storyPath;
-}
-
-// --- ВСЁ ОСТАЛЬНОЕ (renderMenu, show, etc) ОСТАЕТСЯ КАК БЫЛО ---
+// --- ВСЁ ОСТАЛЬНОЕ (Кнопки, Шторка) ---
 function renderMenu() {
     var container = document.getElementById('lang-bar');
     if (!container) return;
@@ -88,7 +88,8 @@ function openWord(key) {
             legoHTML += '<div class="lego-row"><span class="lego-part">' + partName + '</span><span>' + (partMeaning || '') + '</span></div>';
         }
     }
-    var title = (currentLang === 'ru') ? 'Конструктор:' : 'LEGO:';
+    var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:' };
+    var title = titles[currentLang] || 'LEGO:';
     document.getElementById('sheet-word').innerText = baseData.word;
     document.getElementById('sheet-trans').innerText = trans;
     document.getElementById('sheet-lego').innerHTML = '<div style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+title+'</div>' + legoHTML;
