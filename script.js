@@ -5,10 +5,15 @@ var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot';
 
 var currentLang = 'en';
 
-// --- ЗАГРУЗЧИК СЛОВАРЕЙ ---
+// --- УМНЫЙ ЗАГРУЗЧИК СЛОВАРЕЙ (Исправлен для GitHub) ---
 (function loadDictionaries() {
-    var path = window.location.pathname.includes('/') && window.location.pathname.split('/').length > 2 ? '../languages/' : 'languages/';
-    if (window.location.protocol === 'file:') path = 'languages/'; 
+    var path = 'languages/'; // По умолчанию (для файлов в корне)
+    
+    var loc = window.location.pathname;
+    // Если файл лежит в папке stories, news или jokes, выходим на уровень выше
+    if (loc.indexOf('/stories/') !== -1 || loc.indexOf('/news/') !== -1 || loc.indexOf('/jokes/') !== -1) {
+        path = '../languages/';
+    }
 
     ALL_LANGUAGES.forEach(function(lang) {
         var script = document.createElement('script');
@@ -18,7 +23,7 @@ var currentLang = 'en';
     });
 })();
 
-// --- ЗАПУСК ПРИЛОЖЕНИЯ ---
+// --- ЗАПУСК ---
 window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
 
@@ -29,37 +34,29 @@ try {
 
 window.onload = function() {
     renderMenu();
+    renderSupportBtn();
     updateUI();
 };
 
-// --- РЕНДЕР МЕНЮ С КНОПКОЙ ПОДДЕРЖКИ ---
 function renderMenu() {
     var container = document.getElementById('lang-bar');
     if (!container) return;
-    
     var html = '';
-    // 1. Добавляем кнопку сообщения в самое начало
     html += '<div class="support-btn" onclick="openSupport()">💬</div>';
-    
-    // 2. Добавляем обертку для кнопок языков
     html += '<div class="lang-btns-wrap">';
     DISPLAY_LANGS.forEach(function(lang) {
         html += '<div class="lang-btn" id="btn-' + lang + '" onclick="switchLang(\'' + lang + '\')">' + lang.toUpperCase() + '</div>';
     });
     html += '</div>';
-    
     container.innerHTML = html;
 }
 
-function openSupport() {
-    window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL);
-}
+function openSupport() { window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL); }
 
 function switchLang(lang) {
     currentLang = lang;
     try { localStorage.setItem('user_lang', lang); } catch(e) {}
     updateUI();
-    
     var title = document.getElementById('sheet-word').innerText;
     if (title && typeof LEGO_BASE !== 'undefined') {
         for (var key in LEGO_BASE) {
@@ -79,20 +76,14 @@ function openWord(key) {
     if (typeof LEGO_BASE === 'undefined') { return; }
     var baseData = LEGO_BASE[key];
     if (!baseData) return;
-
     try { window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); } catch(e) {}
-
     var trans = "---";
     var dictName = 'DICT_' + currentLang.toUpperCase();
     var dict = window[dictName];
-    
-    if (dict && dict[key]) {
-        trans = dict[key].text;
-    } else {
+    if (dict && dict[key]) { trans = dict[key].text; } else {
         if (typeof DICT_EN !== 'undefined' && DICT_EN[key]) trans = DICT_EN[key].text;
         else if (typeof DICT_RU !== 'undefined' && DICT_RU[key]) trans = DICT_RU[key].text;
     }
-
     var legoHTML = '';
     if (baseData.parts) {
         for (var i=0; i<baseData.parts.length; i++) {
@@ -103,14 +94,11 @@ function openWord(key) {
             legoHTML += '<div class="lego-row"><span class="lego-part">' + partName + '</span><span>' + (partMeaning || '') + '</span></div>';
         }
     }
-
     var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:' };
     var title = titles[currentLang] || 'LEGO:';
-
     document.getElementById('sheet-word').innerText = baseData.word;
     document.getElementById('sheet-trans').innerText = trans;
     document.getElementById('sheet-lego').innerHTML = '<div style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+title+'</div>' + legoHTML;
-    
     document.getElementById('sheet').classList.add('open');
     document.getElementById('overlay').classList.add('show');
 }
