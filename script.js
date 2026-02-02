@@ -1,5 +1,5 @@
 // --- НАСТРОЙКИ ---
-var ALL_LANGUAGES = ['base', 'ru', 'en', 'es', 'pt'];
+var ALL_LANGUAGES = ['base', 'ru', 'en', 'es', 'pt', 'de', 'fr', 'it', 'zh'];
 var DISPLAY_LANGS = ['en', 'es', 'pt', 'ru', 'de', 'fr', 'it', 'zh'];
 var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot'; 
 
@@ -154,4 +154,5 @@ function closeSheet() {
     document.getElementById('sheet').classList.remove('open');
     document.getElementById('overlay').classList.remove('show');
 }
+
 
