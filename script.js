@@ -29,17 +29,19 @@ window.Telegram.WebApp.expand();
 var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
 
 window.onload = function() {
-    // Если мы зашли через transit.html, перекидываем в папку stories
-    if (window.location.pathname.endsWith('transit.html')) {
-        if (startParam) {
-            window.location.href = 'stories/' + startParam + '.html';
+    // Проверяем: если мы на главной странице (index.html или просто корень /)
+    var path = window.location.pathname;
+    if (path.endsWith('index.html') || path.endsWith('/')) {
+        
+        if (!startParam || startParam === 'welcome') {
+            // По умолчанию - Приветствие
+            window.location.href = 'welcome/welcome.html';
         } else {
-            // Если хвостика нет, по умолчанию открываем приветствие
-            window.location.href = 'stories/welcome.html';
+            // Иначе - История из папки stories
+            window.location.href = 'stories/' + startParam + '.html';
         }
         return; 
     }
-
     renderMenu();
     renderSupportBtn();
     updateUI();
@@ -117,3 +119,4 @@ function closeSheet() {
     document.getElementById('sheet').classList.remove('open');
     document.getElementById('overlay').classList.remove('show');
 }
+
