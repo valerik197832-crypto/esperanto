@@ -3,45 +3,45 @@ var ALL_LANGUAGES = ['base', 'ru', 'en', 'es'];
 var DISPLAY_LANGS = ['en', 'es', 'ru', 'de', 'fr', 'it', 'zh']; 
 var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot'; 
 
+// По умолчанию английский
 var currentLang = 'en';
 
-// --- УМНЫЙ ЗАГРУЗЧИК СЛОВАРЕЙ ---
+// --- 1. ЗАГРУЗЧИК СЛОВАРЕЙ ---
 (function loadDictionaries() {
-    var path = 'languages/'; // Путь по умолчанию (если файл в корне)
+    var path = 'languages/';
     var loc = window.location.pathname;
-
-    // ИСПРАВЛЕНИЕ: Добавили проверку папки 'welcome'
-    if (loc.indexOf('/stories/') !== -1 || 
-        loc.indexOf('/welcome/') !== -1 || 
-        loc.indexOf('/news/') !== -1 || 
-        loc.indexOf('/jokes/') !== -1) {
-        
-        path = '../languages/'; // Выходим на уровень выше
+    // Если мы внутри папки (stories, welcome...), выходим на уровень выше
+    if (loc.indexOf('/stories/') !== -1 || loc.indexOf('/welcome/') !== -1 || loc.indexOf('/news/') !== -1 || loc.indexOf('/jokes/') !== -1) {
+        path = '../languages/';
     }
-
+    
+    // Загружаем все словари
     ALL_LANGUAGES.forEach(function(lang) {
         var script = document.createElement('script');
         script.src = path + lang + '.js';
-        script.async = false; // Грузим строго по очереди
+        script.async = false; 
         document.head.appendChild(script);
     });
 })();
 
-// --- ЗАПУСК ---
+// --- 2. ИНИЦИАЛИЗАЦИЯ ---
 window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
 
+// Пытаемся вспомнить выбор пользователя
 try {
     var saved = localStorage.getItem('user_lang');
-    if (saved && DISPLAY_LANGS.includes(saved)) currentLang = saved;
+    // Проверяем, что сохраненный язык реально существует в нашем списке
+    if (saved && DISPLAY_LANGS.indexOf(saved) !== -1) {
+        currentLang = saved;
+    }
 } catch(e) {}
 
-// --- ЛОГИКА ТРАНЗИТА (ГЛАВНАЯ ССЫЛКА) ---
-var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-
+// --- 3. ЗАПУСК ПОСЛЕ ЗАГРУЗКИ СТРАНИЦЫ ---
 window.onload = function() {
-    // Если это index.html (транзит)
+    // Логика транзита (если это index.html)
     if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+        var startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
         if (!startParam || startParam === 'welcome') {
             window.location.href = 'welcome/welcome.html';
         } else {
@@ -50,24 +50,23 @@ window.onload = function() {
         return; 
     }
 
-    // Если это обычная страница
+    // Обычная страница: Рисуем интерфейс
     renderMenu();
-    renderSupportBtn();
-    updateUI();
+    updateUI(); // <--- ВОТ ЭТО КРАСИТ КНОПКИ
 };
 
-// --- МЕНЮ ---
+// --- ФУНКЦИИ ИНТЕРФЕЙСА ---
 function renderMenu() {
     var container = document.getElementById('lang-bar');
     if (!container) return;
     
-    var html = '';
-    html += '<div class="support-btn" onclick="openSupport()">💬</div>';
-    html += '<div class="lang-btns-wrap">';
+    var html = '<div class="support-btn" onclick="openSupport()">💬</div><div class="lang-btns-wrap">';
     DISPLAY_LANGS.forEach(function(lang) {
+        // Создаем кнопку с ID, чтобы потом её найти
         html += '<div class="lang-btn" id="btn-' + lang + '" onclick="switchLang(\'' + lang + '\')">' + lang.toUpperCase() + '</div>';
     });
     html += '</div>';
+    
     container.innerHTML = html;
 }
 
@@ -77,10 +76,12 @@ function openSupport() {
 
 function switchLang(lang) {
     currentLang = lang;
+    // Сохраняем выбор навсегда
     try { localStorage.setItem('user_lang', lang); } catch(e) {}
-    updateUI();
     
-    // Обновляем открытую шторку
+    updateUI(); // Перекрашиваем кнопки
+    
+    // Если шторка открыта - обновляем перевод на лету
     var title = document.getElementById('sheet-word').innerText;
     if (title && typeof LEGO_BASE !== 'undefined') {
         for (var key in LEGO_BASE) {
@@ -90,28 +91,30 @@ function switchLang(lang) {
 }
 
 function updateUI() {
+    // Пробегаем по всем кнопкам и красим нужную
     DISPLAY_LANGS.forEach(function(lang) {
         var btn = document.getElementById('btn-' + lang);
-        if (btn) btn.className = (lang === currentLang) ? 'lang-btn active' : 'lang-btn';
+        if (btn) {
+            if (lang === currentLang) {
+                btn.className = 'lang-btn active'; // Синий
+            } else {
+                btn.className = 'lang-btn'; // Серый
+            }
+        }
     });
 }
 
 // --- ОТКРЫТИЕ СЛОВА ---
 function openWord(key) {
-    // Проверка, загрузилась ли база
-    if (typeof LEGO_BASE === 'undefined') { 
-        console.error('Словарь не найден!'); 
-        return; 
-    }
-    
+    if (typeof LEGO_BASE === 'undefined') return;
     var baseData = LEGO_BASE[key];
     if (!baseData) return;
 
     try { window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); } catch(e) {}
 
-    // 1. Перевод слова целиком
+    // Ищем перевод
     var trans = "---";
-    var dictName = 'DICT_' + currentLang.toUpperCase(); // DICT_RU
+    var dictName = 'DICT_' + currentLang.toUpperCase(); // DICT_EN
     var dict = window[dictName];
     
     if (dict && dict[key]) {
@@ -122,17 +125,14 @@ function openWord(key) {
         else if (typeof DICT_RU !== 'undefined' && DICT_RU[key]) trans = DICT_RU[key].text;
     }
 
-    // 2. Разбор корней
+    // LEGO разбор
     var legoHTML = '';
     if (baseData.parts) {
         for (var i=0; i<baseData.parts.length; i++) {
             var partName = baseData.parts[i];
             var partMeaning = "";
             
-            // Ищем перевод корня
             if (dict && dict[key] && dict[key].roots) partMeaning = dict[key].roots[i];
-            
-            // Запасной для корней
             if (!partMeaning && typeof DICT_EN !== 'undefined' && DICT_EN[key]) partMeaning = DICT_EN[key].roots[i];
 
             legoHTML += '<div class="lego-row"><span class="lego-part">' + partName + '</span><span>' + (partMeaning || '') + '</span></div>';
