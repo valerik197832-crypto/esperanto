@@ -33,13 +33,15 @@ body {
     height: 40px;
     font-size: 20px;
     cursor: pointer;
-    background: #f0f2f5;
+    background: #007bff; /* Яркий синий */
+    color: #ffffff;      /* Белая иконка */
     border-radius: 50%;
     margin-right: 10px;
-    flex-shrink: 0; /* Чтобы не сжималась */
+    flex-shrink: 0;
     user-select: none;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.3); /* Легкая тень */
 }
-.support-btn:active { background: #e2e4e7; transform: scale(0.9); }
+.support-btn:active { background: #0056b3; transform: scale(0.9); }
 
 /* КОНТЕЙНЕР ДЛЯ ЯЗЫКОВ (СКРОЛЛИТСЯ) */
 .lang-btns-wrap {
@@ -106,4 +108,5 @@ body {
 /* ЗАТЕМНЕНИЕ ФОНА */
 #overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: none; z-index: 1100; }
 #overlay.show { display: block; }
+
 .close { position: absolute; top: 15px; right: 20px; font-size: 30px; color: #aaa; cursor: pointer; }
