@@ -67,15 +67,16 @@ var DICT_EN = {
     'povos': { text: 'Will be able', roots: ['can', 'fut'] },
     'ajnan': { text: 'Any', roots: ['any', 'acc'] },
     'vidi': { text: 'To see', roots: ['see', 'inf'] },
-'konfuci': { text: 'Confucius (Chinese philosopher)', roots: ['proper noun'] },
+'konfuci': { text: 'Confucius (Chinese philosopher)', roots: ['name'] },
     'eĉ': { text: 'Even', roots: ['even'] },
     'plej': { text: 'Most', roots: ['superlative'] },
     'longa': { text: 'Long', roots: ['long', 'adj'] },
-    'vojaĝo': { text: 'Journey', roots: ['way', 'thing', 'noun'] },
+    'vojo': { text: 'Way / Path', roots: ['way', 'noun'] },
     'komenciĝas': { text: 'Begins', roots: ['start', 'become', 'pres'] },
-    'per': { text: 'By means of', roots: ['prep'] },
+    'per': { text: 'By / Via', roots: ['prep'] },
     'unu': { text: 'One', roots: ['num'] },
     'paŝo': { text: 'Step', roots: ['step', 'noun'] },
 };
+
 
 
