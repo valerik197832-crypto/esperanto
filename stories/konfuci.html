@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Esperanto Reader</title>
+    <title>Esperanto App</title>
     <link rel="stylesheet" href="../style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        /* Стили точно под скриншот */
+        .post-author {
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+        .post-quote {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
     <div id="overlay" onclick="closeSheet()"></div>
     <div id="lang-bar" class="lang-bar"></div>
 
-    <p style="text-align: center; color: #888; font-size: 16px;">Konfuci:</p>
-    <p style="text-align: center; font-style: italic;">
+    <!-- КОНТЕНТ КАК В ПОСТЕ -->
+    <div class="post-author">Konfuci</div>
+    <div class="post-quote">
         "<span class="word" onclick="openWord('ech')">Eĉ</span> 
-        <span class="word" onclick="show('la')">la</span> 
+        <span class="word" onclick="openWord('la')">la</span> 
         <span class="word" onclick="openWord('plej')">plej</span> 
         <span class="word" onclick="openWord('longa')">longa</span> 
         <span class="word" onclick="openWord('vojagho')">vojaĝo</span> 
         <span class="word" onclick="openWord('komencighas')">komenciĝas</span> 
         <span class="word" onclick="openWord('per')">per</span> 
-        <span class="word" onclick="openWord('unu')">unu</span> 
+        <span class="word" onclick="show('unu')">unu</span> 
         <span class="word" onclick="openWord('pasho')">paŝo</span>."
-    </p>
+    </div>
 
     <div id="sheet">
         <div class="close" onclick="closeSheet()">×</div>
