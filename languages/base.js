@@ -67,15 +67,16 @@ var LEGO_BASE = {
     'povos': { word: 'Povos', parts: ['Pov', 'os'] },
     'ajnan': { word: 'Ajnan', parts: ['Ajn', 'an'] },
     'vidi': { word: 'Vidi', parts: ['Vid', 'i'] },
-    'konfuci': { word: 'Konfuci', parts: ['Konfuci'] },
+'konfuci': { word: 'Konfuci', parts: ['Konfuci'] },
     'eĉ': { word: 'Eĉ', parts: ['Eĉ'] },
     'plej': { word: 'Plej', parts: ['Plej'] },
     'longa': { word: 'Longa', parts: ['Long', 'a'] },
-    'vojaĝo': { word: 'Vojaĝo', parts: ['Voj', 'aĝ', 'o'] },
+    'vojo': { word: 'Vojo', parts: ['Voj', 'o'] },
     'komenciĝas': { word: 'Komenciĝas', parts: ['Komenc', 'iĝ', 'as'] },
     'per': { word: 'Per', parts: ['Per'] },
     'unu': { word: 'Unu', parts: ['Unu'] },
     'paŝo': { word: 'Paŝo', parts: ['Paŝ', 'o'] },
 };
+
 
 
