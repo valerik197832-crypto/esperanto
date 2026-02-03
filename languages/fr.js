@@ -66,5 +66,14 @@ var DICT_FR = {
     'kie': { text: 'Où', roots: ['où'] },
     'povos': { text: 'Pourrez', roots: ['pouvoir', 'fut'] },
     'ajnan': { text: 'N\'importe quel', roots: ['quelconque', 'acc'] },
-    'vidi': { text: 'Voir', roots: ['voir', 'inf'] }
+    'vidi': { text: 'Voir', roots: ['voir', 'inf'] },
+'konfuci': { text: 'Confucius (philosophe chinois)', roots: ['nom propre'] },
+    'ech': { text: 'Même', roots: ['même'] },
+    'plej': { text: 'Le plus', roots: ['superlatif'] },
+    'longa': { text: 'Long', roots: ['long', 'adj'] },
+    'vojagho': { text: 'Voyage', roots: ['voie', 'chose', 'nom'] },
+    'komencighas': { text: 'Commence', roots: ['début', 'devenir', 'prés'] },
+    'per': { text: 'Par', roots: ['prép'] },
+    'unu': { text: 'Un', roots: ['num'] },
+    'pasho': { text: 'Pas', roots: ['pas', 'nom'] },
 };
