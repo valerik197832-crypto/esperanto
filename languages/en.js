@@ -66,5 +66,7 @@ var DICT_EN = {
     'kie': { text: 'Where', roots: ['where'] },
     'povos': { text: 'Will be able', roots: ['can', 'fut'] },
     'ajnan': { text: 'Any', roots: ['any', 'acc'] },
-    'vidi': { text: 'To see', roots: ['see', 'inf'] }
+    'vidi': { text: 'To see', roots: ['see', 'inf'] },
+    'konfuci': { text: 'Confucius (ancient Chinese philosopher)', roots: ['proper noun'] },
 };
+
