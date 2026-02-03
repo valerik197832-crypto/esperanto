@@ -66,5 +66,6 @@ var DICT_RU = {
     'kie': { text: 'Где', roots: ['где'] },
     'povos': { text: 'Сможете', roots: ['мочь', 'буд.вр'] },
     'ajnan': { text: 'Любое', roots: ['любой', 'вин.п'] },
-    'vidi': { text: 'Видеть', roots: ['видеть', 'инф'] }
+    'vidi': { text: 'Видеть', roots: ['видеть', 'инф'] },
+    'test': { text: 'Тест', roots: ['тест'] },
 };
