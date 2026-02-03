@@ -66,5 +66,7 @@ var LEGO_BASE = {
     'kie': { word: 'Kie', parts: ['Kie'] },
     'povos': { word: 'Povos', parts: ['Pov', 'os'] },
     'ajnan': { word: 'Ajnan', parts: ['Ajn', 'an'] },
-    'vidi': { word: 'Vidi', parts: ['Vid', 'i'] }
+    'vidi': { word: 'Vidi', parts: ['Vid', 'i'] },
+    'konfuci': { word: 'Konfuci', parts: ['Konfuci'] },
 };
+
