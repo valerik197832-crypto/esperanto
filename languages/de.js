@@ -66,5 +66,14 @@ var DICT_DE = {
     'kie': { text: 'Wo', roots: ['wo'] },
     'povos': { text: 'Können wird', roots: ['können', 'Fut'] },
     'ajnan': { text: 'Irgendein', roots: ['irgend', 'Akk'] },
-    'vidi': { text: 'Sehen', roots: ['sehen', 'Inf'] }
+    'vidi': { text: 'Sehen', roots: ['sehen', 'Inf'] },
+'konfuci': { text: 'Konfuzius (chinesischer Philosoph)', roots: ['Eigenname'] },
+    'ech': { text: 'Sogar', roots: ['sogar'] },
+    'plej': { text: 'Am meisten', roots: ['Superlativ'] },
+    'longa': { text: 'Lang', roots: ['lang', 'adj'] },
+    'vojagho': { text: 'Reise', roots: ['Weg', 'Sache', 'subst'] },
+    'komencighas': { text: 'Beginnt', roots: ['Beginn', 'werden', 'präs'] },
+    'per': { text: 'Durch / Mit', roots: ['präp'] },
+    'unu': { text: 'Eins', roots: ['zahl'] },
+    'pasho': { text: 'Schritt', roots: ['Schritt', 'subst'] },
 };
