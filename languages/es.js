@@ -67,13 +67,14 @@ var DICT_ES = {
     'povos': { text: 'Podrá', roots: ['poder', 'fut'] },
     'ajnan': { text: 'Cualquier', roots: ['cualquiera', 'acus'] },
     'vidi': { text: 'Ver', roots: ['ver', 'inf'] },
-    'konfuci': { text: 'Confucio (filósofo)', roots: ['nombre'] },
+'konfuci': { text: 'Confucio (filósofo chino)', roots: ['nombre'] },
     'eĉ': { text: 'Incluso', roots: ['incluso'] },
     'plej': { text: 'El más', roots: ['superlativo'] },
     'longa': { text: 'Largo', roots: ['largo', 'adj'] },
-    'vojagho': { text: 'Viaje', roots: ['vía', 'cosa', 'sust'] },
+    'vojo': { text: 'Camino', roots: ['vía', 'sust'] },
     'komenciĝas': { text: 'Comienza', roots: ['inicio', 'hacerse', 'pres'] },
     'per': { text: 'Por medio de', roots: ['prep'] },
     'unu': { text: 'Uno', roots: ['num'] },
-    'paŝo': { text: 'Paso', roots: ['paso', 'sust'] }
+    'paŝo': { text: 'Paso', roots: ['paso', 'sust'] },
 };
+
