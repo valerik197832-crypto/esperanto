@@ -66,5 +66,14 @@ var DICT_ZH = {
     'kie': { text: '哪里', roots: ['哪里'] },
     'povos': { text: '能够', roots: ['能', '将来时'] },
     'ajnan': { text: '任何', roots: ['任何', '宾格'] },
-    'vidi': { text: '查看', roots: ['看', '不定式'] }
+    'vidi': { text: '查看', roots: ['看', '不定式'] },
+'konfuci': { text: '孔子 (中国哲学家)', roots: ['专有名词'] },
+    'ech': { text: '甚至', roots: ['甚至'] },
+    'plej': { text: '最 (最高级)', roots: ['最高级'] },
+    'longa': { text: '长的', roots: ['长度', '形容词'] },
+    'vojagho': { text: '旅程', roots: ['路', '事物', '名词'] },
+    'komencighas': { text: '开始', roots: ['开始', '变成', '现在时'] },
+    'per': { text: '通过', roots: ['介词'] },
+    'unu': { text: '一', roots: ['数字'] },
+    'pasho': { text: '一步', roots: ['步', '名词'] },
 };
