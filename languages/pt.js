@@ -66,5 +66,14 @@ var DICT_PT = {
     'kie': { text: 'Onde', roots: ['onde'] },
     'povos': { text: 'Poderá', roots: ['poder', 'fut'] },
     'ajnan': { text: 'Qualquer', roots: ['qualquer', 'acus'] },
-    'vidi': { text: 'Ver', roots: ['ver', 'inf'] }
+    'vidi': { text: 'Ver', roots: ['ver', 'inf'] },
+'konfuci': { text: 'Confúcio (filósofo chinês)', roots: ['nome próprio'] },
+    'ech': { text: 'Até / Mesmo', roots: ['mesmo'] },
+    'plej': { text: 'O mais', roots: ['superlativo'] },
+    'longa': { text: 'Longo', roots: ['longo', 'adj'] },
+    'vojagho': { text: 'Viagem', roots: ['via', 'coisa', 'subst'] },
+    'komencighas': { text: 'Começa', roots: ['início', 'tornar-se', 'pres'] },
+    'per': { text: 'Por / Através de', roots: ['prep'] },
+    'unu': { text: 'Um', roots: ['num'] },
+    'pasho': { text: 'Passo', roots: ['passo', 'subst'] },
 };
