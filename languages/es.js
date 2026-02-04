@@ -76,5 +76,9 @@ var DICT_ES = {
     'per': { text: 'Por medio de', roots: ['prep'] },
     'unu': { text: 'Uno', roots: ['num'] },
     'paŝo': { text: 'Paso', roots: ['paso', 'sust'] },
+'seneka': { text: 'Séneca (filósofo chino)', roots: ['nombre'] },
+    'tra': { text: 'A través de', roots: ['prep'] },
+    'malfacilajhoj': { text: 'Dificultades', roots: ['contrario', 'fácil', 'cosa', 'sust', 'plural'] },
+    'steloj': { text: 'Estrellas', roots: ['estrella', 'sust', 'plural'] },
 };
 

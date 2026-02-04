@@ -76,4 +76,8 @@ var DICT_IT = {
     'per': { text: 'Tramite', roots: ['prep'] },
     'unu': { text: 'Uno', roots: ['num'] },
     'paŝo': { text: 'Passo', roots: ['passo', 'sost'] },
+'seneka': { text: 'Confucio (filosofo cinese)', roots: ['nome'] },
+    'tra': { text: 'Attraverso', roots: ['prep'] },
+    'malfacilajhoj': { text: 'Difficoltà', roots: ['opposto', 'facile', 'cosa', 'sost', 'plurale'] },
+    'steloj': { text: 'Stelle', roots: ['stella', 'sost', 'plurale'] },
 };

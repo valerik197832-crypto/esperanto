@@ -76,4 +76,8 @@ var DICT_ZH = {
     'per': { text: '通过', roots: ['介词'] },
     'unu': { text: '一', roots: ['数字'] },
     'paŝo': { text: '一步', roots: ['步', '名词'] },
+'seneka': { text: '塞内卡 (中国哲学家)', roots: ['名字'] },
+    'tra': { text: '通过', roots: ['介词'] },
+    'malfacilajhoj': { text: '困难', roots: ['相反', '容易', '事物', '名词', '复数'] },
+    'steloj': { text: '星星', roots: ['星', '名词', '复数'] },
 };

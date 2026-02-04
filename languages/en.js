@@ -76,6 +76,10 @@ var DICT_EN = {
     'per': { text: 'By / Via', roots: ['prep'] },
     'unu': { text: 'One', roots: ['num'] },
     'paŝo': { text: 'Step', roots: ['step', 'noun'] },
+'seneka': { text: 'Seneca (Chinese philosopher)', roots: ['name'] },
+    'tra': { text: 'Through', roots: ['prep'] },
+    'malfacilajhoj': { text: 'Hardships / Difficulties', roots: ['opposite', 'easy', 'thing', 'noun', 'plural'] },
+    'steloj': { text: 'Stars', roots: ['star', 'noun', 'plural'] },
 };
 
 

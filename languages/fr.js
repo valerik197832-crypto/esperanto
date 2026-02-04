@@ -76,4 +76,8 @@ var DICT_FR = {
     'per': { text: 'Par', roots: ['prép'] },
     'unu': { text: 'Un', roots: ['num'] },
     'paŝo': { text: 'Pas', roots: ['pas', 'nom'] },
+'seneka': { text: 'Sénèque (philosophe chinois)', roots: ['nom'] },
+    'tra': { text: 'À travers', roots: ['prép'] },
+    'malfacilajhoj': { text: 'Difficultés', roots: ['contraire', 'facile', 'chose', 'nom', 'pluriel'] },
+    'steloj': { text: 'Étoiles', roots: ['étoile', 'nom', 'pluriel'] },
 };

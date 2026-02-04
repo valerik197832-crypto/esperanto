@@ -76,6 +76,10 @@ var LEGO_BASE = {
     'per': { word: 'Per', parts: ['Per'] },
     'unu': { word: 'Unu', parts: ['Unu'] },
     'paŝo': { word: 'Paŝo', parts: ['Paŝ', 'o'] },
+'seneka': { word: 'Seneka', parts: ['Seneka'] },
+    'tra': { word: 'Tra', parts: ['Tra'] },
+    'malfacilajhoj': { word: 'Malfacilaĵoj', parts: ['Mal', 'facil', 'aĵ', 'o', 'j'] },
+    'steloj': { word: 'Steloj', parts: ['Stel', 'o', 'j'] },
 };
 
 
