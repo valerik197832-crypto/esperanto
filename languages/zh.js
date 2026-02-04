@@ -80,4 +80,9 @@ var DICT_ZH = {
     'tra': { text: '通过', roots: ['介词'] },
     'malfacilajhoj': { text: '困难', roots: ['相反', '容易', '事物', '名词', '复数'] },
     'steloj': { text: '星星', roots: ['星', '名词', '复数'] },
+'doktoro': { text: '医生', roots: ['医生', '名词'] },
+    'chiuj': { text: '大家', roots: ['每个', '复数'] },
+    'ignoras': { text: '无视', roots: ['无视', '现在时'] },
+    'min': { text: '我', roots: ['我', '宾格'] },
+    'sekva': { text: '下一个', roots: ['跟随', '形容词'] },
 };

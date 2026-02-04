@@ -80,4 +80,9 @@ var DICT_DE = {
     'tra': { text: 'Durch', roots: ['Präp'] },
     'malfacilajhoj': { text: 'Schwierigkeiten', roots: ['Gegenteil', 'leicht', 'Sache', 'Subst', 'Plural'] },
     'steloj': { text: 'Sterne', roots: ['Stern', 'Subst', 'Plural'] },
+'doktoro': { text: 'Doktor', roots: ['Doktor', 'Subst'] },
+    'chiuj': { text: 'Alle', roots: ['jeder', 'Pl'] },
+    'ignoras': { text: 'Ignorieren', roots: ['ignorieren', 'Präs'] },
+    'min': { text: 'Mich', roots: ['ich', 'Akk'] },
+    'sekva': { text: 'Nächster', roots: ['folgen', 'Adj'] },
 };

@@ -80,6 +80,11 @@ var DICT_EN = {
     'tra': { text: 'Through', roots: ['prep'] },
     'malfacilajhoj': { text: 'Hardships / Difficulties', roots: ['opposite', 'easy', 'thing', 'noun', 'plural'] },
     'steloj': { text: 'Stars', roots: ['star', 'noun', 'plural'] },
+'doktoro': { text: 'Doctor', roots: ['doctor', 'noun'] },
+    'chiuj': { text: 'Everyone', roots: ['each', 'plural'] },
+    'ignoras': { text: 'Ignore', roots: ['ignore', 'pres'] },
+    'min': { text: 'Me', roots: ['me', 'acc'] },
+    'sekva': { text: 'Next', roots: ['follow', 'adj'] },
 };
 
 
