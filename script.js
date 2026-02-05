@@ -1,8 +1,10 @@
+// --- НАСТРОЙКИ ---
 var ALL_LANGUAGES = ['base', 'ru', 'en', 'es', 'pt', 'de', 'fr', 'it', 'zh']; 
 var DISPLAY_LANGS = ['en', 'es', 'pt', 'ru', 'de', 'fr', 'it', 'zh']; 
 var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot'; 
 var currentLang = 'en';
 
+// --- ЗАГРУЗЧИК СЛОВАРЕЙ ---
 (function loadDictionaries() {
     var path = 'languages/';
     var loc = window.location.pathname;
@@ -65,9 +67,7 @@ function switchLang(lang) {
     updateUI();
     var title = document.getElementById('sheet-word').textContent;
     if (title && typeof LEGO_BASE !== 'undefined') {
-        for (var key in LEGO_BASE) {
-            if (LEGO_BASE[key].word === title) { openWord(key); break; }
-        }
+        for (var key in LEGO_BASE) { if (LEGO_BASE[key].word === title) { openWord(key); break; } }
     }
 }
 
@@ -78,24 +78,39 @@ function updateUI() {
     });
 }
 
+// --- НОВАЯ ЛОГИКА С ПРОВЕРКОЙ ПЕРЕВОДА ---
 function openWord(key) {
     if (typeof LEGO_BASE === 'undefined') return;
     var baseData = LEGO_BASE[key];
     if (!baseData) return;
+
     try { window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); } catch(e) {}
 
     var dictName = 'DICT_' + currentLang.toUpperCase();
     var dict = window[dictName];
     
-    // Берем перевод: целевой язык -> английский -> русский
-    var wordData = (dict && dict[key]) ? dict[key] : (typeof DICT_EN !== 'undefined' ? DICT_EN[key] : DICT_RU[key]);
-    var trans = wordData ? wordData.text : '---';
+    // Ищем перевод только в выбранном языке!
+    var wordData = (dict && dict[key]) ? dict[key] : null;
+    
+    var trans = "";
+    var legoHTML = "";
+    var showReportBtn = false;
 
-    var legoHTML = '';
-    if (baseData.parts && wordData && wordData.roots) {
-        for (var i=0; i<baseData.parts.length; i++) {
-            legoHTML += '<div class="lego-row"><span class="lego-part">' + baseData.parts[i] + '</span><span>' + (wordData.roots[i] || '') + '</span></div>';
+    if (wordData) {
+        // Перевод есть
+        trans = wordData.text;
+        if (baseData.parts) {
+            for (var i=0; i<baseData.parts.length; i++) {
+                legoHTML += '<div class="lego-row"><span class="lego-part">' + baseData.parts[i] + '</span><span>' + (wordData.roots[i] || '') + '</span></div>';
+            }
         }
+    } else {
+        // ПЕРЕВОДА НЕТ -> Твоя новая логика
+        trans = "???";
+        legoHTML = '<div style="text-align:center; padding: 10px; color: #d9534f;">' +
+                   'No translation yet / Перевода пока нет<br><br>' +
+                   '<button onclick="reportMissing(\''+key+'\')" style="padding:10px; border-radius:8px; border:none; background:#007bff; color:white; font-weight:bold; cursor:pointer;">' +
+                   '📢 Raporti mankon (Support)</button></div>';
     }
 
     var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:' };
@@ -105,6 +120,12 @@ function openWord(key) {
     
     document.getElementById('sheet').classList.add('open');
     document.getElementById('overlay').classList.add('show');
+}
+
+// Функция отправки отчета в бот
+function reportMissing(word) {
+    var msg = "Missing translation for word: " + word + " in language: " + currentLang.toUpperCase();
+    window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL + "?start=report_" + word + "_" + currentLang);
 }
 
 function closeSheet() {
