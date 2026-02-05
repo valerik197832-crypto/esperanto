@@ -3,36 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Esperanto Reader</title>
+    <title>Espero Humor</title>
     <link rel="stylesheet" href="../style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        .post-author {
-            font-weight: bold;
-            font-style: italic;
-            margin-bottom: 5px;
-        }
-        .post-quote {
-            font-size: 20px;
-        }
-    </style>
 </head>
 <body>
     <div id="overlay" onclick="closeSheet()"></div>
     <div id="lang-bar" class="lang-bar"></div>
 
-    <div class="post-author"><span class="word" onclick="openWord('konfuci')">Konfuci</span></div>
-    <div class="post-quote">
-        "<span class="word" onclick="openWord('eĉ')">Eĉ</span> 
-        <span class="word" onclick="openWord('la')">la</span> 
-        <span class="word" onclick="openWord('plej')">plej</span> 
-        <span class="word" onclick="openWord('longa')">longa</span> 
-        <span class="word" onclick="openWord('vojo')">vojo</span> 
-        <span class="word" onclick="openWord('komenciĝas')">komenciĝas</span> 
-        <span class="word" onclick="openWord('per')">per</span> 
-        <span class="word" onclick="openWord('unu')">unu</span> 
-        <span class="word" onclick="openWord('paŝo')">paŝo</span>."
-    </div>
+    <p style="font-size: 24px;">😂 <strong>Anekdoto:</strong></p>
+    
+    <p style="font-size: 22px;">
+        — <span class="word" onclick="openWord('doktoro')">Doktoro</span>, 
+        <span class="word" onclick="openWord('ĉiuj')">ĉiuj</span> 
+        <span class="word" onclick="openWord('ignoras')">ignoras</span> 
+        <span class="word" onclick="openWord('min')">min</span>!
+        <br>
+        — <span class="word" onclick="openWord('la')">La</span> 
+        <span class="word" onclick="openWord('sekva')">sekva</span>!
+    </p>
 
     <div id="sheet">
         <div class="close" onclick="closeSheet()">×</div>
