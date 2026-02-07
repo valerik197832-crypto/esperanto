@@ -5,7 +5,6 @@ var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot';
 
 var currentLang = 'en';
 
-// Фразы "Перевод отсутствует" для каждого языка
 var MISSING_PHRASES = {
     'en': 'Translation missing',
     'ru': 'Перевод отсутствует',
@@ -17,7 +16,7 @@ var MISSING_PHRASES = {
     'zh': '缺少翻译'
 };
 
-// --- ЗАГРУЗЧИК СЛОВАРЕЙ ---
+// --- ЗАГРУЗЧИК ---
 (function loadDictionaries() {
     var path = 'languages/';
     var loc = window.location.pathname;
@@ -74,22 +73,13 @@ function renderMenu() {
 
 function openSupport() { window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL); }
 
-// Функция отправки отчета о конкретном слове
-function reportMissing(word) {
-    // Открываем бота с предзаполненным текстом (через параметр start не всегда удобно, лучше просто открыть)
-    // Но можно просто открыть бота, чтобы юзер сам написал
-    window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL);
-}
-
 function switchLang(lang) {
     currentLang = lang;
     try { localStorage.setItem('user_lang', lang); } catch(e) {}
     updateUI();
     var title = document.getElementById('sheet-word').textContent;
     if (title && typeof LEGO_BASE !== 'undefined') {
-        for (var key in LEGO_BASE) {
-            if (LEGO_BASE[key].word === title) { openWord(key); break; }
-        }
+        for (var key in LEGO_BASE) { if (LEGO_BASE[key].word === title) { openWord(key); break; } }
     }
 }
 
@@ -100,6 +90,7 @@ function updateUI() {
     });
 }
 
+// --- ОТКРЫТИЕ СЛОВА (ИСПРАВЛЕНО) ---
 function openWord(key) {
     if (typeof LEGO_BASE === 'undefined') return;
     var baseData = LEGO_BASE[key];
@@ -110,17 +101,24 @@ function openWord(key) {
     var dictName = 'DICT_' + currentLang.toUpperCase();
     var dict = window[dictName];
     
-    // ИЩЕМ ПЕРЕВОД ТОЛЬКО В ТЕКУЩЕМ ЯЗЫКЕ
+    // Ищем перевод ТОЛЬКО в текущем языке
     var wordData = (dict && dict[key]) ? dict[key] : null;
 
-    var contentHTML = "";
+    // Получаем элементы шторки
+    var elWord = document.getElementById('sheet-word');
+    var elTrans = document.getElementById('sheet-trans');
+    var elLego = document.getElementById('sheet-lego');
+
+    elWord.textContent = baseData.word;
 
     if (wordData) {
-        // --- ВАРИАНТ 1: ПЕРЕВОД ЕСТЬ ---
+        // --- ПЕРЕВОД ЕСТЬ ---
+        elTrans.textContent = wordData.text;
+        
         var legoHTML = '';
         if (baseData.parts) {
             for (var i=0; i<baseData.parts.length; i++) {
-                // Если нет перевода корня в текущем языке, берем EN или RU как запасной (для корней это допустимо)
+                // Если нет перевода корня, берем EN или RU
                 var partMeaning = wordData.roots[i];
                 if (!partMeaning) {
                     if (typeof DICT_EN !== 'undefined' && DICT_EN[key]) partMeaning = DICT_EN[key].roots[i];
@@ -131,30 +129,22 @@ function openWord(key) {
         }
         var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:', 'pt':'Análise LEGO:', 'de':'Analyse:', 'fr':'Analyse:', 'it':'Analisi:', 'zh':'分析:' };
         var title = titles[currentLang] || 'LEGO:';
+        
+        elLego.innerHTML = '<div style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+title+'</div>' + legoHTML;
 
-        contentHTML = 
-            '<div class="sheet-word">' + baseData.word + '</div>' +
-            '<div class="sheet-trans">' + wordData.text + '</div>' +
-            '<div class="sheet-lego">' +
-                '<div class="lego-title" style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+title+'</div>' + 
-                legoHTML + 
-            '</div>';
-            
     } else {
-        // --- ВАРИАНТ 2: ПЕРЕВОДА НЕТ (НОВЫЙ ДИЗАЙН) ---
+        // --- ПЕРЕВОДА НЕТ ---
+        elTrans.textContent = "???";
         var missingText = MISSING_PHRASES[currentLang] || 'Translation missing';
         
-        contentHTML = 
-            '<div class="sheet-word">' + baseData.word + '</div>' +
-            '<div class="sheet-trans">???</div>' +
+        elLego.innerHTML = 
             '<div class="missing-box">' +
                 '<div class="missing-title">Mankas traduko</div>' +
                 '<div class="missing-subtitle">' + missingText + '</div>' +
                 '<div class="sheet-support-btn" onclick="openSupport()">💬</div>' +
             '</div>';
     }
-
-    document.getElementById('content').innerHTML = contentHTML;
+    
     document.getElementById('sheet').classList.add('open');
     document.getElementById('overlay').classList.add('show');
 }
