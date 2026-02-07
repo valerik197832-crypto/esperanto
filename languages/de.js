@@ -84,4 +84,5 @@ var DICT_DE = {
     'ĉiuj': { text: 'Alle', roots: ['jeder', 'Plural'] },
     'ignoras': { text: 'Ignorieren', roots: ['ignorieren', 'Präsens'] },
     'min': { text: 'Mich', roots: ['ich (mi)', 'Akusativ'] },
+    'sekva': { text: 'Nächster', roots: ['folgen', 'Adjektiv'] }
 };

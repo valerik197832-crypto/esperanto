@@ -84,6 +84,7 @@ var DICT_ES = {
     'ĉiuj': { text: 'Todos', roots: ['cada', 'plural'] },
     'ignoras': { text: 'Ignoran', roots: ['ignorar', 'presente'] },
     'min': { text: 'Me (a mí)', roots: ['yo (mi)', 'acusativo'] },
+    'sekva': { text: 'Siguiente', roots: ['seguir', 'adjetivo'] }
 };
 
 

@@ -84,4 +84,5 @@ var DICT_FR = {
     'ĉiuj': { text: 'Tous / Tout le monde', roots: ['chaque', 'pluriel'] },
     'ignoras': { text: 'Ignorent', roots: ['ignorer', 'présent'] },
     'min': { text: 'Moi', roots: ['je (mi)', 'accusatif'] },
+    'sekva': { text: 'Suivant', roots: ['suivre', 'adjectif'] }
 };
