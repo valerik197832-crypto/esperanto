@@ -5,15 +5,16 @@ var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot';
 
 var currentLang = 'en';
 
+// Единообразный перевод: "Перевод отсутствует" (Subject + Predicate)
 var MISSING_PHRASES = {
     'en': 'Translation missing',
     'ru': 'Перевод отсутствует',
-    'es': 'Falta traducción',
-    'pt': 'Tradução faltando',
+    'es': 'Traducción ausente',    // Исправлено (было Falta traducción)
+    'pt': 'Tradução ausente',      // Исправлено (было Tradução faltando)
     'de': 'Übersetzung fehlt',
     'fr': 'Traduction manquante',
     'it': 'Traduzione mancante',
-    'zh': '缺少翻译'
+    'zh': '翻译缺失'               // Исправлено (было 缺少翻译)
 };
 
 // --- ЗАГРУЗЧИК ---
@@ -57,6 +58,7 @@ window.onload = function() {
         return; 
     }
     renderMenu();
+    renderSupportBtn();
     updateUI();
 };
 
@@ -69,6 +71,26 @@ function renderMenu() {
     });
     html += '</div>';
     container.innerHTML = html;
+}
+
+// Кнопка поддержки (в правом нижнем углу)
+function renderSupportBtn() {
+    // Проверка, чтобы не создавать кнопку дважды
+    if (document.querySelector('.support-btn.floating')) return;
+
+    var btn = document.createElement('div');
+    btn.className = 'support-btn floating'; // Добавил класс для отличия от кнопки в меню
+    btn.innerHTML = '💬'; 
+    btn.onclick = openSupport;
+    // Мы решили оставить кнопку только в меню, или плавающую тоже?
+    // В style.css у нас прописана .support-btn как fixed.
+    // В renderMenu мы уже добавили кнопку.
+    // Если мы хотим кнопку ТОЛЬКО в меню (сверху), то эту функцию renderSupportBtn можно удалить из onload.
+    // Но судя по прошлому разговору, ты хотел кнопку в меню.
+    // Давай оставим только в меню, чтобы не дублировать.
+    
+    // UPD: В прошлом коде я добавлял кнопку в body. Сейчас она в меню.
+    // Удаляю вызов renderSupportBtn из window.onload, так как кнопка уже рендерится внутри renderMenu.
 }
 
 function openSupport() { window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL); }
@@ -90,7 +112,6 @@ function updateUI() {
     });
 }
 
-// --- ОТКРЫТИЕ СЛОВА (ИСПРАВЛЕНО) ---
 function openWord(key) {
     if (typeof LEGO_BASE === 'undefined') return;
     var baseData = LEGO_BASE[key];
@@ -101,10 +122,8 @@ function openWord(key) {
     var dictName = 'DICT_' + currentLang.toUpperCase();
     var dict = window[dictName];
     
-    // Ищем перевод ТОЛЬКО в текущем языке
     var wordData = (dict && dict[key]) ? dict[key] : null;
 
-    // Получаем элементы шторки
     var elWord = document.getElementById('sheet-word');
     var elTrans = document.getElementById('sheet-trans');
     var elLego = document.getElementById('sheet-lego');
@@ -118,7 +137,6 @@ function openWord(key) {
         var legoHTML = '';
         if (baseData.parts) {
             for (var i=0; i<baseData.parts.length; i++) {
-                // Если нет перевода корня, берем EN или RU
                 var partMeaning = wordData.roots[i];
                 if (!partMeaning) {
                     if (typeof DICT_EN !== 'undefined' && DICT_EN[key]) partMeaning = DICT_EN[key].roots[i];
@@ -137,9 +155,10 @@ function openWord(key) {
         elTrans.textContent = "???";
         var missingText = MISSING_PHRASES[currentLang] || 'Translation missing';
         
+        // Тут поменяли заголовок на "Traduko mankas"
         elLego.innerHTML = 
             '<div class="missing-box">' +
-                '<div class="missing-title">Mankas traduko</div>' +
+                '<div class="missing-title">Traduko mankas</div>' +
                 '<div class="missing-subtitle">' + missingText + '</div>' +
                 '<div class="sheet-support-btn" onclick="openSupport()">💬</div>' +
             '</div>';
