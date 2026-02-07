@@ -1,5 +1,4 @@
 var DICT_EN = {
-    'bonvenon': { text: 'Welcome', roots: ['good', 'come', 'accusative'] },
     'al': { text: 'To / Towards', roots: ['direction'] },
     'esperanto': { text: 'Esperanto', roots: ['hope', 'suffix -ant- (one who)', 'noun (language)'] },
     'vivo': { text: 'Life', roots: ['live', 'noun'] },
