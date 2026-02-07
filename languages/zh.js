@@ -84,5 +84,4 @@ var DICT_ZH = {
     'ĉiuj': { text: '大家', roots: ['每个', '复数'] },
     'ignoras': { text: '无视', roots: ['无视', '现在时'] },
     'min': { text: '我 (宾格)', roots: ['我 (mi)', '宾格'] },
-    'sekva': { text: '下一个', roots: ['跟随', '形容词'] }
 };

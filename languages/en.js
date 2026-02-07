@@ -84,7 +84,6 @@ var DICT_EN = {
     'ĉiuj': { text: 'All / Everyone', roots: ['each', 'plural'] },
     'ignoras': { text: 'Ignore', roots: ['ignore', 'present tense'] },
     'min': { text: 'Me', roots: ['I (mi)', 'accusative case'] },
-    'sekva': { text: 'Next', roots: ['follow', 'adjective'] }
 };
 
 
