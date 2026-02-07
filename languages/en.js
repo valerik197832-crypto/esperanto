@@ -1,4 +1,5 @@
 var DICT_EN = {
+    'bonvenon': { text: 'Welcome', roots: ['good', 'come', 'accusative'] },
     'al': { text: 'To / Towards', roots: ['direction'] },
     'esperanto': { text: 'Esperanto', roots: ['hope', 'suffix -ant- (one who)', 'noun (language)'] },
     'vivo': { text: 'Life', roots: ['live', 'noun'] },
@@ -83,6 +84,7 @@ var DICT_EN = {
     'ĉiuj': { text: 'All / Everyone', roots: ['each', 'plural'] },
     'ignoras': { text: 'Ignore', roots: ['ignore', 'present tense'] },
     'min': { text: 'Me', roots: ['I (mi)', 'accusative case'] },
+    'sekva': { text: 'Next', roots: ['follow', 'adjective'] }
 };
 
 
