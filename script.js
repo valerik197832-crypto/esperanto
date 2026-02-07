@@ -2,7 +2,20 @@
 var ALL_LANGUAGES = ['base', 'ru', 'en', 'es', 'pt', 'de', 'fr', 'it', 'zh']; 
 var DISPLAY_LANGS = ['en', 'es', 'pt', 'ru', 'de', 'fr', 'it', 'zh']; 
 var SUPPORT_BOT_URL = 'https://t.me/EsperoKontakto_bot'; 
+
 var currentLang = 'en';
+
+// Фразы "Перевод отсутствует" для каждого языка
+var MISSING_PHRASES = {
+    'en': 'Translation missing',
+    'ru': 'Перевод отсутствует',
+    'es': 'Falta traducción',
+    'pt': 'Tradução faltando',
+    'de': 'Übersetzung fehlt',
+    'fr': 'Traduction manquante',
+    'it': 'Traduzione mancante',
+    'zh': '缺少翻译'
+};
 
 // --- ЗАГРУЗЧИК СЛОВАРЕЙ ---
 (function loadDictionaries() {
@@ -24,7 +37,7 @@ window.Telegram.WebApp.expand();
 
 try {
     var saved = localStorage.getItem('user_lang');
-    if (saved && DISPLAY_LANGS.indexOf(saved) !== -1) currentLang = saved;
+    if (saved && DISPLAY_LANGS.includes(saved)) currentLang = saved;
 } catch(e) {}
 
 window.onload = function() {
@@ -61,13 +74,22 @@ function renderMenu() {
 
 function openSupport() { window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL); }
 
+// Функция отправки отчета о конкретном слове
+function reportMissing(word) {
+    // Открываем бота с предзаполненным текстом (через параметр start не всегда удобно, лучше просто открыть)
+    // Но можно просто открыть бота, чтобы юзер сам написал
+    window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL);
+}
+
 function switchLang(lang) {
     currentLang = lang;
     try { localStorage.setItem('user_lang', lang); } catch(e) {}
     updateUI();
     var title = document.getElementById('sheet-word').textContent;
     if (title && typeof LEGO_BASE !== 'undefined') {
-        for (var key in LEGO_BASE) { if (LEGO_BASE[key].word === title) { openWord(key); break; } }
+        for (var key in LEGO_BASE) {
+            if (LEGO_BASE[key].word === title) { openWord(key); break; }
+        }
     }
 }
 
@@ -78,7 +100,6 @@ function updateUI() {
     });
 }
 
-// --- НОВАЯ ЛОГИКА С ПРОВЕРКОЙ ПЕРЕВОДА ---
 function openWord(key) {
     if (typeof LEGO_BASE === 'undefined') return;
     var baseData = LEGO_BASE[key];
@@ -89,43 +110,53 @@ function openWord(key) {
     var dictName = 'DICT_' + currentLang.toUpperCase();
     var dict = window[dictName];
     
-    // Ищем перевод только в выбранном языке!
+    // ИЩЕМ ПЕРЕВОД ТОЛЬКО В ТЕКУЩЕМ ЯЗЫКЕ
     var wordData = (dict && dict[key]) ? dict[key] : null;
-    
-    var trans = "";
-    var legoHTML = "";
-    var showReportBtn = false;
+
+    var contentHTML = "";
 
     if (wordData) {
-        // Перевод есть
-        trans = wordData.text;
+        // --- ВАРИАНТ 1: ПЕРЕВОД ЕСТЬ ---
+        var legoHTML = '';
         if (baseData.parts) {
             for (var i=0; i<baseData.parts.length; i++) {
-                legoHTML += '<div class="lego-row"><span class="lego-part">' + baseData.parts[i] + '</span><span>' + (wordData.roots[i] || '') + '</span></div>';
+                // Если нет перевода корня в текущем языке, берем EN или RU как запасной (для корней это допустимо)
+                var partMeaning = wordData.roots[i];
+                if (!partMeaning) {
+                    if (typeof DICT_EN !== 'undefined' && DICT_EN[key]) partMeaning = DICT_EN[key].roots[i];
+                    else if (typeof DICT_RU !== 'undefined' && DICT_RU[key]) partMeaning = DICT_RU[key].roots[i];
+                }
+                legoHTML += '<div class="lego-row"><span class="lego-part">' + baseData.parts[i] + '</span><span>' + (partMeaning || '') + '</span></div>';
             }
         }
+        var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:', 'pt':'Análise LEGO:', 'de':'Analyse:', 'fr':'Analyse:', 'it':'Analisi:', 'zh':'分析:' };
+        var title = titles[currentLang] || 'LEGO:';
+
+        contentHTML = 
+            '<div class="sheet-word">' + baseData.word + '</div>' +
+            '<div class="sheet-trans">' + wordData.text + '</div>' +
+            '<div class="sheet-lego">' +
+                '<div class="lego-title" style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+title+'</div>' + 
+                legoHTML + 
+            '</div>';
+            
     } else {
-        // ПЕРЕВОДА НЕТ -> Твоя новая логика
-        trans = "???";
-        legoHTML = '<div style="text-align:center; padding: 10px; color: #d9534f;">' +
-                   'No translation yet / Перевода пока нет<br><br>' +
-                   '<button onclick="reportMissing(\''+key+'\')" style="padding:10px; border-radius:8px; border:none; background:#007bff; color:white; font-weight:bold; cursor:pointer;">' +
-                   '📢 Raporti mankon (Support)</button></div>';
+        // --- ВАРИАНТ 2: ПЕРЕВОДА НЕТ (НОВЫЙ ДИЗАЙН) ---
+        var missingText = MISSING_PHRASES[currentLang] || 'Translation missing';
+        
+        contentHTML = 
+            '<div class="sheet-word">' + baseData.word + '</div>' +
+            '<div class="sheet-trans">???</div>' +
+            '<div class="missing-box">' +
+                '<div class="missing-title">Mankas traduko</div>' +
+                '<div class="missing-subtitle">' + missingText + '</div>' +
+                '<div class="sheet-support-btn" onclick="openSupport()">💬</div>' +
+            '</div>';
     }
 
-    var titles = { 'ru':'Конструктор:', 'en':'LEGO-Analysis:', 'es':'Análisis LEGO:' };
-    document.getElementById('sheet-word').textContent = baseData.word;
-    document.getElementById('sheet-trans').textContent = trans;
-    document.getElementById('sheet-lego').innerHTML = '<div style="font-size:12px;color:#999;font-weight:bold;margin-bottom:10px;">'+(titles[currentLang] || 'LEGO:')+'</div>' + legoHTML;
-    
+    document.getElementById('content').innerHTML = contentHTML;
     document.getElementById('sheet').classList.add('open');
     document.getElementById('overlay').classList.add('show');
-}
-
-// Функция отправки отчета в бот
-function reportMissing(word) {
-    var msg = "Missing translation for word: " + word + " in language: " + currentLang.toUpperCase();
-    window.Telegram.WebApp.openTelegramLink(SUPPORT_BOT_URL + "?start=report_" + word + "_" + currentLang);
 }
 
 function closeSheet() {
